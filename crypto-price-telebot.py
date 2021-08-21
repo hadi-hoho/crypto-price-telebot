@@ -1,19 +1,18 @@
-import telebot
-import cryptocompare
-import time
+import telebot,cryptocompare,time,threading
 
-info_message= "info here"
-help_message = "help here"
-start_message = "hey"
+info_message= "This bot can send you real-time prices of crypto currencies\nAlso will notify in certain times which can be modified by the Admin \nThis bot is using a open-source code \n   you can access this code in https://github.com/hadi-hoho/crypto-price-telebot"
+help_message = 'usage :\n /help - get this message\n /info - get info message\n /sub - subscribe to the notification option\nGet a coin price by :\n      "price [coin]"\n      e.g.:"price btc"'
+start_message = "Hello there! \n use /help"
 subbed_message = "subbed!"
+notif_time=360 #in minute
 
 #coins go here
-coins=["BTC","BCH"]
+coins=["BTC" , "BCH" , "ETH" , "USDT" , "XRP" , "DOGE" , "LTC" , "ETC" , "XMR"]
 
 #token
 bot_token = ''
 
-#creating neccesery obj
+#creating bot obj
 bot = telebot.TeleBot(bot_token)
 
 @bot.message_handler(commands = ['start'])
@@ -73,13 +72,28 @@ def notify():
     for coin_name in coins:
         price = cryptocompare.get_price(coin_name, 'USD')
         rep_txt =  "📈 "+ coin_name + " : " + str(price[coin_name]['USD']) + " USD"
-        notify_message += rep_txt+'\n'
+        notify_message += rep_txt+'\n\n'
     for sub in subs:
-        bot.send_message(sub,notify_message)
+        try:
+            bot.send_message(sub,notify_message)
+        except:
+            pass
+
+def notifier():
+    while True:
+        notify()
+        time.sleep(notif_time*60)
+
+
 #running
+
+#Starting a Thread For Notify
+thread = threading.Thread(target=notifier , args=())
+thread.start()
+
 while True :
     try :
-        notify()
         bot.polling()
     except Exception:
+        print("### someting went wrong")
         time.sleep(15)
