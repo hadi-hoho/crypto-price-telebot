@@ -34,17 +34,15 @@ def send_info (message):
 def add_sub (message):
     subbed = False
     with open('subs_user_ids.txt','r') as f:
-        while True:
-            line = f.readline()
-            if line==str(message.chat.id):
-                subbed=True
-            if not line:
-                break
+        lines = f.readlines()
+        if str(message.chat.id)+'\n' in lines:
+            subbed=True
+        print(lines)
     if subbed:
         bot.reply_to(message,"You are already subbed !")
     else :
-        with open('subs_user_ids.txt','a+') as f:
-            f.write(str(message.chat.id))
+        with open('subs_user_ids.txt','a') as f:
+            f.write(str(message.chat.id)+'\n')
         bot.reply_to(message , subbed_message)
 
 @bot.message_handler(func=lambda msg: msg is not None and 'price' in msg.text)
