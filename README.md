@@ -9,7 +9,7 @@
     `$pip install -r requirements.txt`
     
   2. modify
-	  replace `bot_token`  in `crypto-price-telebot.py` with your bot token
+	  creat a text file named "bot_token" wich only should contain your bot token.
 	  
   3. run
     `$python crypto-price-telebot.py`

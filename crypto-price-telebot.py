@@ -9,8 +9,13 @@ notif_time = 360  # in minute
 # coins go here
 coins = ["BTC", "BCH", "ETH", "USDT", "XRP", "DOGE", "LTC", "ETC", "XMR"]
 
-# token
-bot_token = ""
+# getting the token
+try:
+    with open("bot_token", "r") as token_file:
+        bot_token = token_file.read()
+except Exception as err_inst:
+    print("something went wrong while getting the bot token")
+    raise Exception("unable to get token") from err_inst
 
 # creating bot obj
 bot = telebot.TeleBot(bot_token)
