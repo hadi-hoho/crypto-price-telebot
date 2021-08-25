@@ -1,6 +1,6 @@
 import telebot, cryptocompare, time, threading
 
-info_message = "This bot can send you real-time prices of crypto currencies\nAlso will notify in certain times which can be modified by the Admin \nThis bot is using a open-source code \n   you can access this code in https://github.com/hadi-hoho/crypto-price-telebot"
+info_message = "This bot can send you real-time prices of crypto currencies\nAlso will notify in certain times which can be modified by the admin \nThis bot is using a open-source code \n   you can access this code at https://github.com/hadi-hoho/crypto-price-telebot"
 help_message = 'usage :\n /help - get this message\n /info - get info message\n /sub - subscribe to the notification option\nGet a coin price by :\n      "price [coin]"\n      e.g.:"price btc"'
 start_message = "Hello there! \n use /help"
 subbed_message = "subbed!"
@@ -41,7 +41,6 @@ def add_sub(message):
         lines = f.readlines()
         if str(message.chat.id) + "\n" in lines:
             subbed = True
-        print(lines)
     if subbed:
         bot.reply_to(message, "You are already subbed !")
     else:
