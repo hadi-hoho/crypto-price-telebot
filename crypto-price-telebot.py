@@ -1,4 +1,4 @@
-import telebot, cryptocompare, time, threading
+import telebot, cryptocompare, time, threading, logging
 
 info_message = "This bot can send you real-time prices of crypto currencies\nAlso will notify in certain times which can be modified by the admin \nThis bot is using a open-source code \n   you can access this code at https://github.com/hadi-hoho/crypto-price-telebot"
 help_message = 'usage :\n /help - get this message\n /info - get info message\n /sub - subscribe to the notification option\nGet a coin price by :\n      "price [coin]"\n      e.g.:"price btc"'
@@ -20,6 +20,12 @@ except Exception as err_inst:
 # creating bot obj
 bot = telebot.TeleBot(bot_token)
 
+# creating logger
+logger = telebot.logger
+telebot.logger.setLevel(logging.ERROR) # Outputs debug messages to console.
+
+# proxy setting uncomment to use socks5 proxy
+# telebot.apihelper.proxy = {'https': "socks5h://127.0.0.1:11080"}
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
@@ -105,5 +111,5 @@ while True:
     try:
         bot.polling()
     except Exception:
-        print("### someting went wrong")
+        print("### something went wrong")
         time.sleep(15)
